@@ -41,7 +41,8 @@ public class ActionServlet extends HttpServlet {
 
             if (todo != null) {
                 switch (todo) {
-                    case "consulter-liste-clients":
+                    case "inscription":
+                        
                         break;
                 }
             }
