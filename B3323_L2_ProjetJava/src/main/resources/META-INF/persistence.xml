@@ -12,7 +12,7 @@
     <class>metier.modele.Personne</class>
     <class>metier.modele.Soutien</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/InstructifFronted"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/InstructifFrontend"/>
       <property name="javax.persistence.jdbc.user" value="yassine"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
       <property name="javax.persistence.jdbc.password" value="MDP"/>

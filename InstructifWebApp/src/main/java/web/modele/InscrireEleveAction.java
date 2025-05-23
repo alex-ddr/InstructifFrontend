@@ -8,7 +8,6 @@ package web.modele;
 import static console.Main.printlnConsoleIHM;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +38,7 @@ public class InscrireEleveAction extends Action {
             e = new Eleve(date_naissance, niveau, nom, prenom, email, mdp);
             Boolean res = service.inscrireEleve(e, code);
             printlnConsoleIHM(res + " -> Inscription eleve " + e);
+            request.setAttribute("eleve", e);
         } catch (IOException ex) {
             Logger.getLogger(InscrireEleveAction.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {

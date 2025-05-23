@@ -1,0 +1,24 @@
+.avatar-header {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+}
+
+.form-card {
+    background-color: var(--fond-formulaire);
+    border-radius: 25px;
+    padding: 40px 30px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-card label {
+    margin-top: 15px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}

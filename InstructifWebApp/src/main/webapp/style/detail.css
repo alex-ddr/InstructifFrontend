@@ -1,0 +1,20 @@
+.card {
+    background-color: var(--fond-formulaire);
+    border-radius: 25px;
+    padding: 40px 30px;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.details-table {
+    width: 100%;
+    margin: 0 auto 30px;
+    text-align: left;
+    font-size: 1.1em;
+    color: var(--texte-sombre);
+}
+
+.details-table td {
+    padding: 8px 12px;
+}

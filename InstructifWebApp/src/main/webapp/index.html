@@ -1,29 +1,41 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Connexion</title>
+        <link rel="stylesheet" href="./style/global.css" />
+        <link rel="stylesheet" href="./style/connexion.css" />
+        <script src="./javascript/index.js"></script>
+    </head>
 
     <body>
         <div class="container">
             <h1 class="title">Instruct-if</h1>
-            <h3>Se connecter</h3>
-            <form class="form">
-                <label for="nom">Email</label>
-                <input type="text" id="nom" name="nom" required>
-    
-                <label for="prenom">Mot de passe</label>
-                <input type="text" id="prenom" name="prenom" required>
 
-    
-                <button type="submit">Se connecter</button>
-            </form>
-            <p class="link">Pas encore inscrit ? <a href="inscription.html">Inscrivez-vous ici</a></p>
+            <div class="card">
+                <h3>Se connecter</h3>
+
+                <div class="form">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" required />
+
+                    <label for="mdp">Mot de passe</label>
+                    <input type="password" id="mdp" required />
+
+                    <div class="button-container">
+                        <button id="connexion-btn" class="btn">Se connecter</button>
+                    </div>
+                </div>
+
+                <p class="link">
+                    Pas encore inscrit ? Qu'est-ce que t'attends ? <a href="inscription.html">Inscrivez-vous ici</a>
+                </p>
+            </div>
         </div>
+
+
     </body>
-    
- </html>
+
+</html>

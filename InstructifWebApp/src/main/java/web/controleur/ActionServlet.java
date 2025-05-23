@@ -5,7 +5,6 @@
  */
 package web.controleur;
 
-import static console.Main.printlnConsoleIHM;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,7 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.JpaUtil;
-import web.modele.InscrireEleveAction;
+import web.modele.*;
+import web.vue.*;
 
 /**
  *
@@ -46,8 +46,11 @@ public class ActionServlet extends HttpServlet {
                     case "inscrire-eleve":
                         InscrireEleveAction inscrire_eleve_action = new InscrireEleveAction();
                         inscrire_eleve_action.execute(request);
-                        //ListeClientsSerialisation liste_clients_seri = new ListeClientsSerialisation();
-                        //liste_clients_seri.appliquer(request, response);
+                        InscrireEleveSerialisation inscrire_eleve_serialisation = new InscrireEleveSerialisation();
+                        inscrire_eleve_serialisation.appliquer(request, response);
+                        break;
+                    case "connexion":
+                        
                         break;
                 }
             }

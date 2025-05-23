@@ -1,0 +1,38 @@
+.avatar-header {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    text-align: center;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.avatar-nom {
+    color: var(--blanc);
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+
+.card-button {
+    background-color: var(--fond-formulaire);
+    color: var(--texte-sombre);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px auto;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    max-width: 600px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}

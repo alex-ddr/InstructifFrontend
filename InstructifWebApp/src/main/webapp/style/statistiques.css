@@ -1,0 +1,54 @@
+.avatar-header {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    text-align: center;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.avatar-nom {
+    color: var(--blanc);
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+
+.card {
+    background-color: var(--fond-formulaire);
+    border-radius: 25px;
+    padding: 40px 30px;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.stats-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 30px 0;
+    gap: 20px;
+}
+
+.map {
+    max-width: 300px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.info-box {
+    flex: 1;
+    min-width: 200px;
+    padding: 15px;
+    border: 1px solid var(--texte-sombre);
+    border-radius: 10px;
+    background-color: var(--fond-formulaire);
+    font-size: 0.95em;
+}

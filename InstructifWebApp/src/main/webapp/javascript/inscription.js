@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#bouton-inscrire').on('click', function () {
-        console.log("ça marche");
+
         // Collect values
         const nom = $('#nom').val();
         const prenom = $('#prenom').val();
@@ -25,7 +25,6 @@ $(document).ready(function () {
         }
 
 
-
         // AJAX request
         $.ajax({
             type: 'POST',
@@ -43,12 +42,11 @@ $(document).ready(function () {
             dataType: "json"
         })
                 .done(function (response) {
-                    alert("Inscription réussie.")
-                    printlnConsoleIHM("Done réussie");
+                    alert("Inscription réussie.");
+                    window.location.href = "./index.html";
                 })
                 .fail(function (error) {
-                    alert("L'inscription a échoué.")
-                    printlnConsoleIHM("Done raté");
+                    alert("L'inscription a échoué.");
                 });
     });
 });

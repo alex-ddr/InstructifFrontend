@@ -1,0 +1,69 @@
+.avatar-header {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    text-align: center;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.avatar-nom {
+    color: var(--blanc);
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+
+.block {
+    background-color: var(--fond-formulaire);
+    border-radius: 20px;
+    padding: 20px 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label {
+    font-weight: bold;
+    color: var(--texte-sombre);
+    font-size: 1.1em;
+}
+
+.visio-link {
+    color: var(--texte-sombre);
+    font-weight: bold;
+    text-decoration: underline;
+    margin-left: 20px;
+}
+
+select {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1em;
+    min-width: 180px;
+}
+
+.center-button {
+    text-align: center;
+}
+
+.btn-orange {
+    background-color: var(--orange);
+    color: var(--blanc);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-orange:hover {
+    background-color: #e05f1e;
+}

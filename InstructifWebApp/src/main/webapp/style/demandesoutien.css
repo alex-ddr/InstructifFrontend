@@ -1,0 +1,23 @@
+.avatar-header {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+}
+
+.details-table {
+    width: 100%;
+    margin: 0 auto 30px;
+    text-align: left;
+    font-size: 1.1em;
+    color: var(--texte-sombre);
+}
+
+.details-table td {
+    padding: 8px 12px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
