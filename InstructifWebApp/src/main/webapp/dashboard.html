@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tableau de bord</title>
-    <link rel="stylesheet" href="./style/global.css" />
-    <link rel="stylesheet" href="./style/dashboard.css" />
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tableau de bord</title>
+        <link rel="stylesheet" href="./style/global.css" />
+        <link rel="stylesheet" href="./style/dashboard.css" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="javascript/global.js"></script>
+    </head>
 
-<body>
-    <div class="avatar-header">
-        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="avatar" alt="avatar" />
-        <p class="avatar-nom">RANDOMNOM</p>
-    </div>
-
-    <div class="container">
-        <h1 class="title">TABLEAU DE BORD</h1>
-
-        <div class="card-button" onclick="location.href='historique.html'">
-            Mon historique de soutiens
+    <body>
+        <div class="avatar-header">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="avatar" alt="avatar" />
+            <p class="avatar-nom"></p>
         </div>
 
-        <div class="card-button" onclick="location.href='statistiques.html'">
-            Consulter les statistiques
+        <div class="container">
+            <h1 class="title">TABLEAU DE BORD</h1>
+
+            <div class="card-button" onclick="location.href = 'historique.html'">
+                Mon historique de soutiens
+            </div>
+
+            <div class="card-button" onclick="location.href = 'statistiques.html'">
+                Consulter les statistiques
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 
 </html>

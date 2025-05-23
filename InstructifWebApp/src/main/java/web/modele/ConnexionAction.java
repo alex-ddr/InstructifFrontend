@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import metier.modele.Eleve;
 import metier.modele.Intervenant;
 import metier.modele.Autre;
@@ -33,21 +34,24 @@ public class ConnexionAction extends Action {
         Personne personne = service.Authentification(email, mdp);
         if (personne != null) {
 
+            request.setAttribute("personne", personne);
+            
             Eleve eleve;
             Intervenant intervenant;
-            
+            HttpSession session = request.getSession();
+
             if (personne instanceof Eleve) {
                 eleve = (Eleve) personne;
+                session.setAttribute("Eleve", eleve);
+                session.setAttribute("type", "eleve");
             } else {
                 intervenant = (Intervenant) personne;
+                session.setAttribute("Intervenant", intervenant);
+                session.setAttribute("type", "intervenant");
             }
-            
-            window.location
 
-        }
-        else
+        } else {
             printlnConsoleIHM("Personne pas trouvée.");
         }
     }
-
 }

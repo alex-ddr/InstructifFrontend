@@ -21,9 +21,19 @@ $(document).ready(function () {
             data: {
                 todo: "connexion",
                 email: email,
-                mdp: mdp,
+                mdp: mdp
             },
             dataType: "json"
         })
+                .done(function (data) {
+                    if (data.redirection) {
+                        window.location.href = data.redirection;
+                    } else {
+                        alert("Erreur : pas d'URL de redirection.");
+                    }
+                })
+                .fail(function (error) {
+                    alert("La connexion a échoué.");
+                });
     });
 });

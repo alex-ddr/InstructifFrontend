@@ -43,14 +43,23 @@ public class ActionServlet extends HttpServlet {
 
             if (todo != null) {
                 switch (todo) {
+                    
+                    case "afficher_avatar_nom":
+                        GlobalSerialisation global_serialisation = new GlobalSerialisation();
+                        global_serialisation.appliquer(request, response);
+                        
                     case "inscrire-eleve":
                         InscrireEleveAction inscrire_eleve_action = new InscrireEleveAction();
                         inscrire_eleve_action.execute(request);
                         InscrireEleveSerialisation inscrire_eleve_serialisation = new InscrireEleveSerialisation();
                         inscrire_eleve_serialisation.appliquer(request, response);
                         break;
-                    case "connexion":
                         
+                    case "connexion":
+                        ConnexionAction connexion_action = new ConnexionAction();
+                        connexion_action.execute(request);
+                        ConnexionSerialisation connexion_serialisation = new ConnexionSerialisation();
+                        connexion_serialisation.appliquer(request, response);
                         break;
                 }
             }
