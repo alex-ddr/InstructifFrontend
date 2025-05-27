@@ -55,6 +55,13 @@ public class ActionServlet extends HttpServlet {
                         ListerMatieresSerialisation lister_matieres_serialisation = new ListerMatieresSerialisation();
                         lister_matieres_serialisation.appliquer(request, response);
                         break;
+                        
+                    case "afficher-soutien":
+                        AfficherSoutienAction a_s_a = new AfficherSoutienAction();
+                        a_s_a.execute(request);
+                        AfficherSoutienSerialisation a_s_s = new AfficherSoutienSerialisation();
+                        a_s_s.appliquer(request, response);
+                        break;
 
                     case "inscrire-eleve":
                         InscrireEleveAction inscrire_eleve_action = new InscrireEleveAction();

@@ -12,6 +12,6 @@ $(document).ready(function () {
                 document.querySelector(".avatar-nom").textContent = data.nom + " " + data.prenom;
             })
             .fail(function (error) {
-                alert("Erruer d'affichage globale.");
+                alert("Erreur d'affichage globale.");
             });
 });
