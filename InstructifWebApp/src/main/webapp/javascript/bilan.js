@@ -1,7 +1,23 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+$(document).ready(function () {
+    $('#envoyer-btn').on('click', function () {
 
+        const retourIntervenant = $('#bilan-btn').val();
 
+        // AJAX request
+        $.ajax({
+            type: 'POST',
+            url: './ActionServlet',
+            data: {
+                todo: "bilan",
+                retourIntervenant: bilan
+            },
+            dataType: "json"
+        })
+                .done(function (response) {
+                    window.location.href = "./dashboard.html";
+                })
+                .fail(function (error) {
+                    alert(" Le bilan du soutien a échoué.");
+                });
+    });
+});
