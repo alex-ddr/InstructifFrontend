@@ -28,7 +28,7 @@ public class InscrireEleveAction extends Action {
         String mdp = request.getParameter("mdp");
         String date_naissance = request.getParameter("date_naissance");
         String code = request.getParameter("code");
-        Long niveau = Long.parseLong(request.getParameter("niveau"));
+        Long niveau = Long.parseLong((String)request.getParameter("niveau"));
 
         Service service = new Service();
 

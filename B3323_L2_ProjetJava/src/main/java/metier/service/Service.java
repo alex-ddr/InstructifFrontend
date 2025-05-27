@@ -479,12 +479,5 @@ public class Service {
 //        }
     }
 
-    public List<Matiere> obtenirListeMatiere() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public List<Matiere> obtenirListeMatiere() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }

@@ -30,25 +30,13 @@ $(document).ready(function () {
     $('#envoyer-btn').on('click', function () {
 
         // Collect values
-        const nom = $('#nom').val();
-        const prenom = $('#prenom').val();
-        const email = $('#email').val();
-        const mdp = $('#mdp').val();
-        const confirm = $('#confirm').val();
-        const date_naissance = $('#date_naissance').val();
-        const code = $('#code').val();
-        const niveau = $('#niveau').val();
+        const matiere = $('#matiere').val();
+        const description = $('#description').val();
 
         // Champs obligatoires
-        if (!nom || !prenom || !email || !mdp || !confirm || !date_naissance || !code || !niveau)
+        if (!matiere || !description)
         {
             alert("Tous les champs doivent être remplis.");
-            return;
-        }
-
-        // Password confirmation
-        if (mdp !== confirm) {
-            alert("Les mots de passe de correspondent pas.");
             return;
         }
 
@@ -58,23 +46,18 @@ $(document).ready(function () {
             type: 'POST',
             url: './ActionServlet',
             data: {
-                todo: "inscrire-eleve",
-                nom: nom,
-                prenom: prenom,
-                email: email,
-                mdp: mdp,
-                date_naissance: date_naissance,
-                code: code,
-                niveau: niveau
+                todo: "demande",
+                matiere: matiere,
+                description: description,
             },
             dataType: "json"
         })
                 .done(function (response) {
-                    alert("Inscription réussie.");
-                    window.location.href = "./index.html";
+                    alert("Demande envoyée réussie.");
+                    window.location.href = "./retour_demande_eleve.html";
                 })
                 .fail(function (error) {
-                    alert("L'inscription a échoué.");
+                    alert("La demande a échoué.");
                 });
     });
 
