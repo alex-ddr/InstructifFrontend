@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -8,6 +9,7 @@
         <link rel="stylesheet" href="./style/global.css">
         <link rel="stylesheet" href="./style/demande.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="./javascript/demande.js"></script>
     </head>
 
     <body>
@@ -19,7 +21,7 @@
             <h1 class="title">Demande de soutien</h1>
             <div class="form-card">
                 <label for="matiere">Choisir une matière*</label>
-                <input type="text" id="matiere" placeholder="Choisissez une matière">
+                <select id="matiere"></select>
 
                 <label for="description">Description du soutien*</label>
                 <textarea id="description" placeholder="Décris tes besoins ..."></textarea>

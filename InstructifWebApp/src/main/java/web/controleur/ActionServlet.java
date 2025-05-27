@@ -48,6 +48,12 @@ public class ActionServlet extends HttpServlet {
                         GlobalSerialisation global_serialisation = new GlobalSerialisation();
                         global_serialisation.appliquer(request, response);
                         
+                    case "lister-matieres":
+                        ListerMatieresAction lister_matieres_action = new ListerMatieresAction();
+                        lister_matieres_action.execute(request);
+                        ListerMatieresSerialisation lister_matieres_serialisation = new ListerMatieresSerialisation();
+                        lister_matieres_serialisation.appliquer(request, response);
+                        
                     case "inscrire-eleve":
                         InscrireEleveAction inscrire_eleve_action = new InscrireEleveAction();
                         inscrire_eleve_action.execute(request);
