@@ -83,6 +83,12 @@ public class ActionServlet extends HttpServlet {
                         ConnexionSerialisation connexion_serialisation = new ConnexionSerialisation();
                         connexion_serialisation.appliquer(request, response);
                         break;
+                    case "afficher_profil":
+                        AfficherProfilAction profilAction = new AfficherProfilAction();
+                        profilAction.execute(request);
+                        AfficherProfilSerialisation profilSerial = new AfficherProfilSerialisation();
+                        profilSerial.appliquer(request, response);
+                        break;
                 }
             }
         }
