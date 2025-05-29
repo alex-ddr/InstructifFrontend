@@ -5,7 +5,6 @@
  */
 package metier.service;
 
-
 import com.google.maps.model.LatLng;
 import static console.Main.printlnConsoleIHM;
 import metier.modele.Eleve;
@@ -42,82 +41,98 @@ import util.Message;
  * @author ytaharaste
  */
 public class Service {
-        public Etablissement creerEtablissement(String code) throws IOException {
+
+    public Etablissement creerEtablissement(String code) throws IOException {
         EducNetApi api = new EducNetApi();
         List<String> result = api.getInformationEtablissement(code);
-        
+
         if (result != null) {
             String denomination = result.get(1);
-            
+
             Float ips = Float.parseFloat(result.get(8));
-                    
+
             String nomCommune = result.get(4);
-            
-            System.out.println("Etablissement " + code + ": " + denomination + " à " + nomCommune);  
-            
-            String adresse = denomination +", "+nomCommune ; 
+
+            System.out.println("Etablissement " + code + ": " + denomination + " à " + nomCommune);
+
+            String adresse = denomination + ", " + nomCommune;
             LatLng coord = GeoNetApi.getLatLng(adresse);
-            Etablissement etablissement = new Etablissement (code, denomination, ips, coord);
+            Etablissement etablissement = new Etablissement(code, denomination, ips, coord);
             return etablissement;
-        }
-        else {
+        } else {
             System.out.println("Etablissement inconnu");
             return null;
         }
+
     }
-    
+
+    public void ajouterEtablissement(String code) {
+        EtablissementDAO etablissementDAO = new EtablissementDAO();
+        try {
+            JpaUtil.creerContextePersistance();
+            JpaUtil.ouvrirTransaction();
+            Etablissement e = creerEtablissement(code);
+            etablissementDAO.createEtablissment(e);
+            JpaUtil.validerTransaction();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally { // dans tous les cas, on ferme l'entity manager
+            JpaUtil.fermerContextePersistance();
+        }
+    }
+
     public Boolean inscrireEleve(Eleve eleve, String code) {
-       EleveDao eleveDao = new EleveDao();
-       EtablissementDAO etablissementDAO = new EtablissementDAO() ; 
-       Message message = new Message();
-       Boolean resultat = true ; 
-       try {
+        EleveDao eleveDao = new EleveDao();
+        EtablissementDAO etablissementDAO = new EtablissementDAO();
+        Message message = new Message();
+        Boolean resultat = true;
+        try {
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
             //String code = eleve.getCodeEtablissement(); 
-            Etablissement e  = etablissementDAO.findByCode(code) ; 
-            if (e==null) 
-            {
+            Etablissement e = etablissementDAO.findByCode(code);
+            if (e == null) {
                 e = creerEtablissement(code);
-                etablissementDAO.createEtablissment (e); 
+                etablissementDAO.createEtablissment(e);
             }
             eleve.setEtablissement(e);
             eleveDao.create(eleve);
             JpaUtil.validerTransaction();
-             // envoyer le mail de confirmation
-            message.envoyerMail("contact@instruct.if", eleve.getMail(), "Bienvenue dans le réseau INSTRUCT'IF", "Bonjour "+eleve.getPrenom()+", nous te confirmons ton inscription sur le réseau INSTRUC'IF. Si tu as besoin d'un soutien pour tes leçons ou tes devoirs, rends-toi sur notre site pour une mise en relation avec un intervenant.") ;
+            // envoyer le mail de confirmation
+            message.envoyerMail("contact@instruct.if", eleve.getMail(), "Bienvenue dans le réseau INSTRUCT'IF", "Bonjour " + eleve.getPrenom() + ", nous te confirmons ton inscription sur le réseau INSTRUC'IF. Si tu as besoin d'un soutien pour tes leçons ou tes devoirs, rends-toi sur notre site pour une mise en relation avec un intervenant.");
         } catch (Exception ex) {
             ex.printStackTrace();
             JpaUtil.annulerTransaction();
-            message.envoyerMail("contact@instruct.if", eleve.getMail(), "Echec de l'inscription sur le réseau INSTRUCT'IF", "Bonjour " +eleve.getPrenom()+", ton inscription sur le réseau INSTRUCT'IF a malencontreusement échouée... Merci de recommencer ultérieurement");
-             resultat = false; // on pourrait aussi lancer une exception
+            message.envoyerMail("contact@instruct.if", eleve.getMail(), "Echec de l'inscription sur le réseau INSTRUCT'IF", "Bonjour " + eleve.getPrenom() + ", ton inscription sur le réseau INSTRUCT'IF a malencontreusement échouée... Merci de recommencer ultérieurement");
+            resultat = false; // on pourrait aussi lancer une exception
         } finally { // dans tous les cas, on ferme l'entity manager
             JpaUtil.fermerContextePersistance();
-       
+
         }
         return resultat;
     }
-    
+
     public String genererLienVisio(String mailEleve, String nomIntervenant, String prenomIntervenant) {
-        String lienVisio = "https://servif.insa-lyon.fr/InteractIF/visio.html?eleve=" + mailEleve 
+        String lienVisio = "https://servif.insa-lyon.fr/InteractIF/visio.html?eleve=" + mailEleve
                 + "&intervenant=" + prenomIntervenant.charAt(0) + nomIntervenant;
         return lienVisio;
     }
-    
+
     // Service pour l'élève
     public Boolean demandeSoutien(Eleve eleve, String description, Matiere matiere) {
         SoutienDao soutienDao = new SoutienDao();
-        IntervenantDao intervenantDao = new IntervenantDao() ; 
+        IntervenantDao intervenantDao = new IntervenantDao();
         Message message = new Message();
-        
+
         Date date = Date.valueOf(LocalDate.now());
         Time heureDemande = Time.valueOf(LocalTime.now());
         Soutien soutien = new Soutien(date, heureDemande, description, matiere);
-        Boolean resultat = true ; 
+        Boolean resultat = true;
         try {
             JpaUtil.creerContextePersistance();
-            soutien.setEleve (eleve) ;
-            Intervenant intervenant = intervenantDao.findBestIntervenant(eleve.getNiveau()) ; 
+            soutien.setEleve(eleve);
+            Intervenant intervenant = intervenantDao.findBestIntervenant(eleve.getNiveau());
             if (intervenant == null) {
                 System.out.println("Aucun intervenant disponible.");
                 resultat = false;
@@ -125,19 +140,19 @@ public class Service {
             soutien.setIntervenant(intervenant);
             String lienVisio = genererLienVisio(eleve.getMail(), intervenant.getNom().toLowerCase(), intervenant.getPrenom().toLowerCase());
             soutien.setLienVisio(lienVisio);
-            
+
             JpaUtil.ouvrirTransaction();
-            soutienDao.create(soutien); 
+            soutienDao.create(soutien);
             printlnConsoleIHM(" -> soutien " + soutien);
-            intervenant.setDisponibilite(false)  ;
-            intervenant.setNbSolicitation(intervenant.getNbSolicitation()+1);
+            intervenant.setDisponibilite(false);
+            intervenant.setNbSolicitation(intervenant.getNbSolicitation() + 1);
             intervenantDao.update(intervenant);
             JpaUtil.validerTransaction();
-            
-            message.envoyerNotification(intervenant.getTel(), "Bonjour " + intervenant.getPrenom() 
-                    + ". Merci de prendre en charge la demande de soutien en « " 
-                    + soutien.getMatiere().getIntitule() 
-                    + " » demandée à " + soutien.getHeureDemande() + " par " + eleve.getPrenom() 
+
+            message.envoyerNotification(intervenant.getTel(), "Bonjour " + intervenant.getPrenom()
+                    + ". Merci de prendre en charge la demande de soutien en « "
+                    + soutien.getMatiere().getIntitule()
+                    + " » demandée à " + soutien.getHeureDemande() + " par " + eleve.getPrenom()
                     + " en classe de " + eleve.getNiveau() + "ème.");
             resultat = true;
         } catch (Exception ex) {
@@ -146,14 +161,13 @@ public class Service {
             resultat = false;
         } finally {
             JpaUtil.fermerContextePersistance();
-        } 
-        return resultat; 
+        }
+        return resultat;
     }
-    
-    
+
     public boolean evaluerProgression(Eleve eleve, Long note) {
         SoutienDao soutienDao = new SoutienDao();
-        Boolean resultat = true ;
+        Boolean resultat = true;
         try {
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
@@ -176,72 +190,68 @@ public class Service {
         } finally {
             JpaUtil.fermerContextePersistance();
         }
-        return resultat ; 
+        return resultat;
     }
-    
+
     public Soutien obtenirDemandeSoutienEleve(Eleve eleve) throws Exception {
         SoutienDao soutienDao = new SoutienDao();
-        Soutien soutien = null ; 
+        Soutien soutien = null;
 
-            JpaUtil.creerContextePersistance();
-            
-            soutien = soutienDao.findActualSoutienEleve(eleve);
-            JpaUtil.fermerContextePersistance();
-        
-        return soutien ;  }
+        JpaUtil.creerContextePersistance();
 
-    
+        soutien = soutienDao.findActualSoutienEleve(eleve);
+        JpaUtil.fermerContextePersistance();
+
+        return soutien;
+    }
+
     // Services pour l'intervenant
     public Soutien obtenirDemandeSoutien(Intervenant intervenant) throws Exception {
         SoutienDao soutienDao = new SoutienDao();
-        IntervenantDao intervenantDao = new IntervenantDao(); 
-        Soutien soutien = null ; 
+        IntervenantDao intervenantDao = new IntervenantDao();
+        Soutien soutien = null;
 
-            JpaUtil.creerContextePersistance();
-            
-            intervenant = intervenantDao.findById(intervenant.getId()) ;
-            if (intervenant.getDisponibilite()) {
-                printlnConsoleIHM("Pas de demande de soutien pour" + intervenant.getPrenom());
-            }
-            else{
-                soutien = soutienDao.findActualSoutien(intervenant);
-            }
-            JpaUtil.fermerContextePersistance();
-        
-        return soutien ;  }
-    
-    
-    
-    public boolean commencerSoutien (Soutien soutien )
-  
-    {
+        JpaUtil.creerContextePersistance();
+
+        intervenant = intervenantDao.findById(intervenant.getId());
+        if (intervenant.getDisponibilite()) {
+            printlnConsoleIHM("Pas de demande de soutien pour" + intervenant.getPrenom());
+        } else {
+            soutien = soutienDao.findActualSoutien(intervenant);
+        }
+        JpaUtil.fermerContextePersistance();
+
+        return soutien;
+    }
+
+    public boolean commencerSoutien(Soutien soutien) {
         SoutienDao soutienDao = new SoutienDao();
-        boolean resultat = true ;
+        boolean resultat = true;
         try {
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
-               
-             Time heureDebut = Time.valueOf(LocalTime.now());
-             soutien.setHeureDebut(heureDebut);
-                soutienDao.update(soutien);
-                JpaUtil.validerTransaction();
-               
-              
-            } catch (Exception ex) {
+
+            Time heureDebut = Time.valueOf(LocalTime.now());
+            soutien.setHeureDebut(heureDebut);
+            soutienDao.update(soutien);
+            JpaUtil.validerTransaction();
+
+        } catch (Exception ex) {
             ex.printStackTrace();
             JpaUtil.annulerTransaction();
-            resultat = false ; 
-            
+            resultat = false;
+
         } finally {
             JpaUtil.fermerContextePersistance();
-        } 
-        return resultat ; 
+        }
+        return resultat;
     }
+
     public boolean cloturerSoutien(Intervenant intervenant, String retourIntervenant) {
         SoutienDao soutienDao = new SoutienDao();
         IntervenantDao intervenantDao = new IntervenantDao();
         Message message = new Message();
-        boolean resultat = true ; 
+        boolean resultat = true;
         try {
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
@@ -255,18 +265,18 @@ public class Service {
                 resultat = false;
             }
 
-            soutien.setRetourIntervenant(retourIntervenant);          
+            soutien.setRetourIntervenant(retourIntervenant);
             intervenant.setDisponibilite(true);
             // Calcule la durée en minutes
             LocalTime heureDebut = soutien.getHeureDebut().toLocalTime();
             LocalTime heureFin = LocalTime.now();
-            Long dureeSecondes = java.time.Duration.between(heureDebut, heureFin).toMillis()/1000;
+            Long dureeSecondes = java.time.Duration.between(heureDebut, heureFin).toMillis() / 1000;
             soutien.setDuree(dureeSecondes);
 
             soutienDao.update(soutien);
             intervenantDao.update(intervenant);
             JpaUtil.validerTransaction();
-            
+
             String email = soutien.getEleve().getMail();
             String sujet = "Retour de votre soutien";
             String contenu = "Bonjour " + soutien.getEleve().getPrenom() + ",\n\n"
@@ -274,7 +284,7 @@ public class Service {
                     + retourIntervenant + "\n\n"
                     + "Bonne continuation !";
             message.envoyerMail("contact@instruct.if", email, sujet, contenu);
-            
+
             resultat = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -283,9 +293,9 @@ public class Service {
         } finally {
             JpaUtil.fermerContextePersistance();
         }
-        return resultat ; 
+        return resultat;
     }
-    
+
     public List<Etablissement> listerEtablissements() {
         List<Etablissement> etablissements = new ArrayList<>();
         EtablissementDAO etablissementDao = new EtablissementDAO();
@@ -299,7 +309,7 @@ public class Service {
         }
         return etablissements;
     }
-    
+
     public List<Matiere> listerMatieres() {
         List<Matiere> matieres = new ArrayList<>();
         MatiereDao matiereDao = new MatiereDao();
@@ -313,8 +323,7 @@ public class Service {
         }
         return matieres;
     }
-    
-    
+
     public void initialisationMatiere() {
         MatiereDao matiereDao = new MatiereDao();
         Matiere matiere;
@@ -323,16 +332,16 @@ public class Service {
             JpaUtil.ouvrirTransaction();
 
             List<String> intitules = Arrays.asList(
-                "Mathématiques", 
-                "Physique-Chimie", 
-                "Français", 
-                "Histoire-Géographie", 
-                "Anglais", 
-                "Espagnol", 
-                "Sciences de la Vie et de la Terre", 
-                "Philosophie", 
-                "Informatique", 
-                "Économie"
+                    "Mathématiques",
+                    "Physique-Chimie",
+                    "Français",
+                    "Histoire-Géographie",
+                    "Anglais",
+                    "Espagnol",
+                    "Sciences de la Vie et de la Terre",
+                    "Philosophie",
+                    "Informatique",
+                    "Économie"
             );
 
             for (String intitule : intitules) {
@@ -347,34 +356,34 @@ public class Service {
             JpaUtil.fermerContextePersistance();
         }
     }
-    
+
     public void initialisationIntervenant() throws Exception {
         IntervenantDao intervenantDao = new IntervenantDao();
-        
+
         try {
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
-            
-            Enseignant enseignant1 = new Enseignant(15L, "01 23 45 67 89", "Durand", "Pierre", "pierre.durand@mail.com", "password123", 
-                                                    Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L), "Lycée", "Mathématiques");
-            Enseignant enseignant2 = new Enseignant(16L, "01 34 56 78 90", "Lemoine", "Julien", "julien.lemoine@mail.com", "password124", 
-                                                    Arrays.asList(1L, 2L, 4L), "Collège", "Physique");
-            Autre autre1 = new Autre(17L, "01 45 67 89 01", "Hernandez", "Ana", "ana.hernandez@mail.com", "password125", 
-                                     Arrays.asList(2L, 3L, 5L), "Consultante", "Consultant en marketing");
-            Autre autre2 = new Autre(18L, "01 56 78 90 12", "Robert", "Clément", "clement.robert@mail.com", "password126", 
-                                     Arrays.asList(3L, 4L, 5L), "Freelance", "Développeur full-stack");
-            Etudiant etudiant1 = new Etudiant(19L, "06 12 34 56 78", "Martin", "Léa", "lea.martin@mail.com", "password127", 
-                                              Arrays.asList(2L, 5L, 6L), "Etudiant", "Université Paris", "Informatique");
-            Etudiant etudiant2 = new Etudiant(20L, "06 23 45 67 89", "Lemoine", "Marc", "marc.lemoine@mail.com", "password128", 
-                                              Arrays.asList(1L, 2L, 4L), "Etudiant", "Université Lyon", "Mathématiques");
-            Enseignant enseignant3 = new Enseignant(21L, "01 67 89 01 23", "Dupont", "Luc", "luc.dupont@mail.com", "password129", 
-                                                    Arrays.asList(3L, 4L, 5L), "Lycée", "Histoire");
-            Autre autre3 = new Autre(22L, "01 78 90 12 34", "Meyer", "Sophie", "sophie.meyer@mail.com", "password130", 
-                                     Arrays.asList(4L, 5L, 6L), "Consultante", "Coach en développement personnel");
-            Etudiant etudiant3 = new Etudiant(23L, "06 34 56 78 90", "Ferrer", "Carlos", "carlos.ferrer@mail.com", "password131", 
-                                              Arrays.asList(2L, 4L, 6L), "Etudiant", "Université Nice", "Physique");
-            Enseignant enseignant4 = new Enseignant(24L, "01 89 01 23 45", "Martinez", "Sophie", "sophie.martinez@mail.com", "password132", 
-                                                    Arrays.asList(1L, 3L, 5L), "Collège", "Anglais");
+
+            Enseignant enseignant1 = new Enseignant(15L, "01 23 45 67 89", "Durand", "Pierre", "pierre.durand@mail.com", "password123",
+                    Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L), "Lycée", "Mathématiques");
+            Enseignant enseignant2 = new Enseignant(16L, "01 34 56 78 90", "Lemoine", "Julien", "julien.lemoine@mail.com", "password124",
+                    Arrays.asList(1L, 2L, 4L), "Collège", "Physique");
+            Autre autre1 = new Autre(17L, "01 45 67 89 01", "Hernandez", "Ana", "ana.hernandez@mail.com", "password125",
+                    Arrays.asList(2L, 3L, 5L), "Consultante", "Consultant en marketing");
+            Autre autre2 = new Autre(18L, "01 56 78 90 12", "Robert", "Clément", "clement.robert@mail.com", "password126",
+                    Arrays.asList(3L, 4L, 5L), "Freelance", "Développeur full-stack");
+            Etudiant etudiant1 = new Etudiant(19L, "06 12 34 56 78", "Martin", "Léa", "lea.martin@mail.com", "password127",
+                    Arrays.asList(2L, 5L, 6L), "Etudiant", "Université Paris", "Informatique");
+            Etudiant etudiant2 = new Etudiant(20L, "06 23 45 67 89", "Lemoine", "Marc", "marc.lemoine@mail.com", "password128",
+                    Arrays.asList(1L, 2L, 4L), "Etudiant", "Université Lyon", "Mathématiques");
+            Enseignant enseignant3 = new Enseignant(21L, "01 67 89 01 23", "Dupont", "Luc", "luc.dupont@mail.com", "password129",
+                    Arrays.asList(3L, 4L, 5L), "Lycée", "Histoire");
+            Autre autre3 = new Autre(22L, "01 78 90 12 34", "Meyer", "Sophie", "sophie.meyer@mail.com", "password130",
+                    Arrays.asList(4L, 5L, 6L), "Consultante", "Coach en développement personnel");
+            Etudiant etudiant3 = new Etudiant(23L, "06 34 56 78 90", "Ferrer", "Carlos", "carlos.ferrer@mail.com", "password131",
+                    Arrays.asList(2L, 4L, 6L), "Etudiant", "Université Nice", "Physique");
+            Enseignant enseignant4 = new Enseignant(24L, "01 89 01 23 45", "Martinez", "Sophie", "sophie.martinez@mail.com", "password132",
+                    Arrays.asList(1L, 3L, 5L), "Collège", "Anglais");
 
             // Persiste les intervenants dans la base de données avec intervenantDao.create()
             intervenantDao.create(enseignant1);
@@ -387,7 +396,7 @@ public class Service {
             intervenantDao.create(autre3);
             intervenantDao.create(etudiant3);
             intervenantDao.create(enseignant4);
-            
+
             JpaUtil.validerTransaction();
         } catch (IOException e) {
             e.printStackTrace();
@@ -396,7 +405,7 @@ public class Service {
             JpaUtil.fermerContextePersistance();
         }
     }
-    
+
     public List<Soutien> ListerHistoriqueSoutienEleve(Eleve eleve) throws Exception {
         List<Soutien> soutiens;
         try {
@@ -410,7 +419,7 @@ public class Service {
         }
         return soutiens;
     }
-    
+
     public List<Soutien> ListerHistoriqueSoutienIntervenant(Intervenant intervenant) throws Exception {
         List<Soutien> soutiens;
         try {
@@ -424,7 +433,7 @@ public class Service {
         }
         return soutiens;
     }
-    
+
     // Statistiques
     public long getNombreTotalSoutiens() {
         SoutienDao soutienDao = new SoutienDao();
@@ -437,7 +446,7 @@ public class Service {
         }
         return total;
     }
-    
+
     public long getNombreTotalSoutiensEtablissement(Etablissement etablissement) {
         SoutienDao soutienDao = new SoutienDao();
         JpaUtil.creerContextePersistance();
@@ -461,7 +470,7 @@ public class Service {
         }
         return moyenne != null ? moyenne : 0.0;
     }
-    
+
     public Personne Authentification(String mail, String mdp) {
         Personne personne;
         try {
@@ -489,6 +498,5 @@ public class Service {
 //            return (Autre) personne;
 //        }
     }
-
 
 }

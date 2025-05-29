@@ -32,7 +32,7 @@ public class GlobalSerialisation extends Serialisation {
             container.addProperty("prenom", intervenant.getPrenom());
         }
 
-        printlnConsoleIHM(container);
+        printlnConsoleIHM("Affichage global" + container);
         // Création du JSON de réponse
         response.setContentType("application/json;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {

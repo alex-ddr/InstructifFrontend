@@ -56,6 +56,13 @@ public class ActionServlet extends HttpServlet {
                         lister_matieres_serialisation.appliquer(request, response);
                         break;
                         
+                    case "lister-etablissements":
+                        ListerEtablissementsAction lister_etablissement_action = new ListerEtablissementsAction();
+                        lister_etablissement_action.execute(request);
+                        ListerEtablissementsSerialisation lister_etablissement_serialisation = new ListerEtablissementsSerialisation();
+                        lister_etablissement_serialisation.appliquer(request, response);
+                        break;
+                        
                     case "afficher-soutien":
                         AfficherSoutienAction a_s_a = new AfficherSoutienAction();
                         a_s_a.execute(request);
