@@ -8,18 +8,20 @@
         <link rel="stylesheet" href="./style/global.css">
         <link rel="stylesheet" href="./style/retour_demande_eleve.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="./javascript/global.js"></script>
+        <script src="./javascript/retour_demande_eleve.js"></script>
     </head>
 
     <body>
         <div class="avatar-header">
             <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="avatar" alt="avatar" />
-            <p class="avatar-nom">NOMRANDOM</p>
+            <p class="avatar-nom"></p>
         </div>
 
         <div class="container">
             <div class="block">
                 <span class="label">Lien visio</span>
-                <a href="#" class="visio-link">Clique ici !</a>
+                <a id="rejoindre_visio_link" class="btn" target="_blank" href="">Clique ici !</a>
             </div>
 
             <div class="block">
@@ -35,7 +37,7 @@
             </div>
 
             <div class="center-button">
-                <button class="btn-orange">Séance terminée !</button>
+                <button id="seance-terminee" class="btn-orange">Séance terminée !</button>
             </div>
         </div>
     </body>

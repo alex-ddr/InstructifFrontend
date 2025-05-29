@@ -50,6 +50,18 @@ public class SoutienDao {
         return result.isEmpty() ? null : result.get(0);
     }
     
+        public Soutien findActualSoutienEleve(Eleve eleve) {
+        EntityManager em = JpaUtil.obtenirContextePersistance() ; 
+        String request = "select s from Soutien s where s.eleve = :eleve order by s.date desc, s.heureDemande desc";
+        Query query = em.createQuery(request); 
+        query.setParameter("eleve", eleve);  
+        query.setMaxResults(1); 
+        
+        
+        List<Soutien> result = query.getResultList();
+        return result.isEmpty() ? null : result.get(0);
+    }
+    
     public Soutien findLastSoutienByEleve(Eleve eleve) {
         EntityManager em = JpaUtil.obtenirContextePersistance() ;
         String request = "SELECT s FROM Soutien s WHERE s.eleve = :eleve ORDER BY s.date DESC, s.heureDemande DESC";

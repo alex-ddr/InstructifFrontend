@@ -178,6 +178,17 @@ public class Service {
         }
         return resultat ; 
     }
+    
+    public Soutien obtenirDemandeSoutienEleve(Eleve eleve) throws Exception {
+        SoutienDao soutienDao = new SoutienDao();
+        Soutien soutien = null ; 
+
+            JpaUtil.creerContextePersistance();
+            
+            soutien = soutienDao.findActualSoutienEleve(eleve);
+            JpaUtil.fermerContextePersistance();
+        
+        return soutien ;  }
 
     
     // Services pour l'intervenant
@@ -249,8 +260,8 @@ public class Service {
             // Calcule la durée en minutes
             LocalTime heureDebut = soutien.getHeureDebut().toLocalTime();
             LocalTime heureFin = LocalTime.now();
-            Long dureeMinutes = java.time.Duration.between(heureDebut, heureFin).toMinutes();
-            soutien.setDuree(dureeMinutes);
+            Long dureeSecondes = java.time.Duration.between(heureDebut, heureFin).toMillis()/1000;
+            soutien.setDuree(dureeSecondes);
 
             soutienDao.update(soutien);
             intervenantDao.update(intervenant);

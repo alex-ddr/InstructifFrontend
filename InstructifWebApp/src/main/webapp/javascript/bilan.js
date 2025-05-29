@@ -1,15 +1,15 @@
 $(document).ready(function () {
     $('#envoyer-btn').on('click', function () {
 
-        const retourIntervenant = $('#bilan-btn').val();
+        const retourIntervenant = $('#bilan').val();
 
         // AJAX request
         $.ajax({
             type: 'POST',
             url: './ActionServlet',
             data: {
-                todo: "bilan",
-                retourIntervenant: bilan
+                todo: "bilan-soutien",
+                retourIntervenant: retourIntervenant
             },
             dataType: "json"
         })

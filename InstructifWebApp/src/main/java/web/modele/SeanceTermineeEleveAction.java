@@ -8,6 +8,8 @@ package web.modele;
 import static console.Main.printlnConsoleIHM;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -16,22 +18,36 @@ import metier.modele.Eleve;
 import metier.modele.Intervenant;
 import metier.modele.Autre;
 import metier.modele.Personne;
+import metier.modele.Soutien;
 import metier.service.Service;
 
 /**
  *
  * @author adidier2
  */
-public class BilanAction extends Action {
+public class SeanceTermineeEleveAction extends Action {
 
     @Override
     public void execute(HttpServletRequest request) {
         Service service = new Service();
-        
-        String retourIntervenant = (String) request.getParameter("retourIntervenant");
+        String noteStr = request.getParameter("note_eleve");
+        Long note_eleve = null;
+        try {
+            note_eleve = Long.valueOf(noteStr);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
         HttpSession session = request.getSession();
-        Intervenant intervenant = (Intervenant) session.getAttribute("Intervenant");
-        
-        Boolean res = service.cloturerSoutien(intervenant, retourIntervenant);
+        Eleve eleve = (Eleve) session.getAttribute("Eleve");
+
+        try {
+            Soutien soutien = service.obtenirDemandeSoutienEleve(eleve);
+            service.evaluerProgression(eleve, note_eleve);
+            printlnConsoleIHM("ELEVE avec NOTE" + note_eleve + soutien);
+
+        } catch (Exception ex) {
+            Logger.getLogger(AfficherSoutienAction.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

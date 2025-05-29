@@ -18,14 +18,15 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import metier.modele.Soutien;
 
-public class BilanSerialisation extends Serialisation {
+public class LienVisioEleveSerialisation extends Serialisation {
 
     @Override
     public void appliquer(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String retourIntervenant = (String) request.getParameter("retourIntervenant");
+        String lien_visio = (String) request.getAttribute("lien-visio");
+
         
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(retourIntervenant);
+        String json = gson.toJson(lien_visio);
 
         printlnConsoleIHM(json);
 

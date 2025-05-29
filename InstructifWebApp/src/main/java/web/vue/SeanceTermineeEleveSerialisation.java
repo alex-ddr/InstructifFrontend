@@ -18,14 +18,20 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import metier.modele.Soutien;
 
-public class BilanSerialisation extends Serialisation {
+public class SeanceTermineeEleveSerialisation extends Serialisation {
 
     @Override
     public void appliquer(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String retourIntervenant = (String) request.getParameter("retourIntervenant");
-        
+        String noteStr = request.getParameter("note_eleve");
+        Long note_eleve = null;
+        try {
+            note_eleve = Long.valueOf(noteStr);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(retourIntervenant);
+        String json = gson.toJson(note_eleve);
 
         printlnConsoleIHM(json);
 
