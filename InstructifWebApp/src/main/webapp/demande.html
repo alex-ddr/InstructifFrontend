@@ -1,36 +1,37 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Demande de soutien</title>
-        <link rel="stylesheet" href="./style/global.css">
-        <link rel="stylesheet" href="./style/demande.css">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="./javascript/demande.js"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demande de soutien</title>
+    <link rel="stylesheet" href="./style/global.css">
+    <link rel="stylesheet" href="./style/demande.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./javascript/demande.js"></script>
+</head>
 
-    <body>
-        <div class="avatar-header">
+<body>
+    <div class="avatar-header">
+        <a href="profil.html">
             <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="avatar" alt="avatar">
-        </div>
+        </a>
+    </div>
 
-        <div class="container">
-            <h1 class="title">Demande de soutien</h1>
-            <div class="form-card">
-                <label for="matiere">Choisir une matière*</label>
-                <select id="matiere"></select>
+    <div class="container">
+        <h1 class="title">Demande de soutien</h1>
+        <div class="form-card">
+            <label for="matiere">Choisir une matière*</label>
+            <select id="matiere"></select>
 
-                <label for="description">Description du soutien*</label>
-                <textarea id="description" placeholder="Décris tes besoins ..."></textarea>
+            <label for="description">Description du soutien*</label>
+            <textarea id="description" placeholder="Décris tes besoins ..."></textarea>
 
-                <div class="button-container">
-                    <button id="envoyer-btn">Envoyer la demande</button>
-                </div>
+            <div class="button-container">
+                <button id="envoyer-btn">Envoyer la demande</button>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 
 </html>
