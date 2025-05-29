@@ -1,45 +1,54 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Statistiques</title>
-        <link rel="stylesheet" href="./style/global.css">
-        <link rel="stylesheet" href="./style/statistiques.css">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistiques</title>
+  <link rel="stylesheet" href="./style/global.css">
+  <link rel="stylesheet" href="./style/statistiques.css">
+</head>
 
-    <body>
-        <div class="avatar-header">
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="avatar" alt="avatar" />
-            <p class="avatar-nom">NOMRANDOM</p>
+<body>
+  <div class="avatar-header">
+    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="avatar" alt="avatar" />
+    <p class="avatar-nom">NOM RANDOM</p>
+  </div>
+
+  <div class="container">
+    <h1 class="title">Statistiques</h1>
+
+    <div class="card">
+      <p><strong>Nombre de soutiens :</strong> <span id="nb-soutiens">-</span></p>
+      <p><strong>IPS moyen :</strong> <span id="ips">-</span></p>
+
+      <div class="stats-content">
+        <!-- Carte Google Maps -->
+        <div id="map" style="height: 400px; width: 100%; margin-bottom: 20px;"></div>
+
+        <!-- Info-bulle détaillée -->
+        <div class="info-box">
+          <p><strong>Nom de l’établissement :</strong> <span id="etab">—</span></p>
+          <p><strong>IPS :</strong> <span id="etab-ips">—</span></p>
+          <p><strong>Nombre de soutiens :</strong> <span id="etab-soutiens">—</span></p>
+          <p><strong>Durée moyenne des soutiens :</strong> <span id="etab-duree">—</span></p>
         </div>
+      </div>
 
-        <div class="container">
-            <h1 class="title">Statistiques</h1>
+      <div class="button-container">
+        <a href="dashboard.html"><button class="btn">Quitter</button></a>
+      </div>
+    </div>
+  </div>
 
-            <div class="card">
-                <p><strong>Nombre de soutiens :</strong> <span id="nb-soutiens">-</span></p>
-                <p><strong>IPS moyen :</strong> <span id="ips">-</span></p>
-
-                <div class="stats-content">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Carte_France_villes.svg/640px-Carte_France_villes.svg.png"
-                         class="map" alt="Carte des soutiens">
-
-                    <div class="info-box">
-                        <p><strong>Nom de l’établissement :</strong> <span id="etab">—</span></p>
-                        <p><strong>IPS :</strong> <span id="etab-ips">—</span></p>
-                        <p><strong>Nombre de soutiens :</strong> <span id="etab-soutiens">—</span></p>
-                        <p><strong>Durée moyenne des soutiens :</strong> <span id="etab-duree">—</span></p>
-                    </div>
-                </div>
-
-                <div class="button-container">
-                    <button class="btn">Quitter</button>
-                </div>
-            </div>
-        </div>
-    </body>
+  <!-- jQuery si besoin pour d'autres appels AJAX -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Ton script de stats -->
+  <script src="./javascript/statistiques.js"></script>
+  <!-- API Google Maps avec la clé de l'exemple -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhf3JleYpal9S-xouJYH8lf7Dvz5Y2Nko&callback=initMap">
+  </script>
+</body>
 
 </html>
