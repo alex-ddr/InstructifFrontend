@@ -27,6 +27,7 @@ public class InscrireEleveAction extends Action {
         String email = request.getParameter("email");
         String mdp = request.getParameter("mdp");
         String date_naissance = request.getParameter("date_naissance");
+        printlnConsoleIHM("action : " + date_naissance);
         String code = request.getParameter("code");
         Long niveau = Long.parseLong((String)request.getParameter("niveau"));
 
@@ -39,6 +40,7 @@ public class InscrireEleveAction extends Action {
             Boolean res = service.inscrireEleve(e, code);
             printlnConsoleIHM(res + " -> Inscription eleve " + e);
             request.setAttribute("eleve", e);
+            printlnConsoleIHM("eleve : " + e.getDateNaissance());
         } catch (IOException ex) {
             Logger.getLogger(InscrireEleveAction.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {

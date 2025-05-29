@@ -79,7 +79,7 @@ public class Eleve extends Personne{
     public Eleve(String dateNaissance, Long niveau, String nom, String prenom, String mail, String motDePasse ) throws IOException, ParseException {
         super(nom, prenom, mail, motDePasse);
         
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         this.dateNaissance = sdf.parse(dateNaissance);
         
         this.niveau = niveau;

@@ -136,7 +136,7 @@ public class Main {
         printlnConsoleIHM("Inscription Eleve E2");
         Eleve e1;
 
-        e1 = new Eleve("06-03-2000", 3L, "Pascal", "Alice", "alice.pascal@free.fr", "1234");
+        e1 = new Eleve("2000-03-06", 3L, "Pascal", "Alice", "alice.pascal@free.fr", "1234");
         Boolean resultat1 = service.inscrireEleve(e1, codeEtablissement);
         printlnConsoleIHM(resultat1 + " -> Inscription eleve C1 " + e1);
 
