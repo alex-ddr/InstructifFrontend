@@ -499,4 +499,20 @@ public class Service {
 //        }
     }
 
+    public Soutien getSoutienById(Long id) {
+        SoutienDao soutienDao = new SoutienDao();
+        Soutien soutien = null;
+
+        try {
+            JpaUtil.creerContextePersistance();
+            soutien = soutienDao.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+
+        return soutien;
+    }
+
 }

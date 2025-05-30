@@ -55,14 +55,14 @@ public class ActionServlet extends HttpServlet {
                         ListerMatieresSerialisation lister_matieres_serialisation = new ListerMatieresSerialisation();
                         lister_matieres_serialisation.appliquer(request, response);
                         break;
-                        
+
                     case "lister-etablissements":
                         ListerEtablissementsAction lister_etablissement_action = new ListerEtablissementsAction();
                         lister_etablissement_action.execute(request);
                         ListerEtablissementsSerialisation lister_etablissement_serialisation = new ListerEtablissementsSerialisation();
                         lister_etablissement_serialisation.appliquer(request, response);
                         break;
-                        
+
                     case "afficher-soutien":
                         AfficherSoutienAction a_s_a = new AfficherSoutienAction();
                         a_s_a.execute(request);
@@ -96,33 +96,47 @@ public class ActionServlet extends HttpServlet {
                         AfficherProfilSerialisation profilSerial = new AfficherProfilSerialisation();
                         profilSerial.appliquer(request, response);
                         break;
-                        
+
                     case "lien-visio-eleve":
                         LienVisioEleveAction l_v_e_a = new LienVisioEleveAction();
                         l_v_e_a.execute(request);
                         LienVisioEleveSerialisation l_v_e_s = new LienVisioEleveSerialisation();
                         l_v_e_s.appliquer(request, response);
                         break;
-                        
+
                     case "lien-visio-intervenant":
                         LienVisioIntervenantAction l_v_i_a = new LienVisioIntervenantAction();
                         l_v_i_a.execute(request);
                         LienVisioIntervenantSerialisation l_v_i_s = new LienVisioIntervenantSerialisation();
                         l_v_i_s.appliquer(request, response);
                         break;
-                        
+
                     case "seance-terminee-eleve":
                         SeanceTermineeEleveAction s_t_e_a = new SeanceTermineeEleveAction();
                         s_t_e_a.execute(request);
                         SeanceTermineeEleveSerialisation s_t_e_s = new SeanceTermineeEleveSerialisation();
                         s_t_e_s.appliquer(request, response);
                         break;
-                        
+
                     case "bilan-soutien":
                         BilanAction ba = new BilanAction();
                         ba.execute(request);
                         BilanSerialisation bs = new BilanSerialisation();
                         bs.appliquer(request, response);
+                        break;
+
+                    case "lister-historique":
+                        ListerHistoriqueAction l_h_a = new ListerHistoriqueAction();
+                        l_h_a.execute(request);
+                        ListerHistoriqueSerialisation l_h_s = new ListerHistoriqueSerialisation();
+                        l_h_s.appliquer(request, response);
+                        break;
+
+                    case "afficher-detail-soutien":
+                        AfficherDetailSoutienAction a_d_s_a = new AfficherDetailSoutienAction();
+                        a_d_s_a.execute(request);
+                        AfficherDetailSoutienSerialisation a_d_s_s = new AfficherDetailSoutienSerialisation();
+                        a_d_s_s.appliquer(request, response);
                         break;
                 }
             }
