@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,24 +8,19 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="./javascript/historique.js"></script>
 </head>
-
 <body>
   <div class="container">
-   
     <h1 class="title">Mon Historique</h1>
 
-    
-
     <!-- Conteneur des cartes -->
-    <div id="historique-container">
+    <div id="historique-container"></div>
 
-    </div>
-
-    <!-- Bouton Quitter -->
-    <div class="button-container" >
-      <a href="profil.html"><button class="btn" style="background-color:#DF6C2D">Quitter</button></a>
+    <!-- Bouton Quitter (sera mis à jour en JS) -->
+    <div class="button-container">
+      <a id="btn-quitter" href="#">
+        <button class="btn" style="background-color:#DF6C2D">Quitter</button>
+      </a>
     </div>
   </div>
 </body>
-
 </html>
